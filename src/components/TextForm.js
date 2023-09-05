@@ -3,27 +3,24 @@ import React, {useState} from "react";
 export default function TextForm(props) {
     const [text, setText] = useState('');
     var [count, setCount] = useState(0)
+
     const handleOnClick = () =>{
-        // console.log('this is on click '+ text);
         let newText = text.toUpperCase();
         setText(newText)
         props.showAlert('Converted to Upper Case', "success")
     }
     const handleOnClickLo = () =>{
-        // console.log('this is on click '+ text);
         let newText = text.toLowerCase();
         setText(newText);
         props.showAlert('Converted to Lower Case', "success")
 
     }
     const handleClearText = () =>{
-        // console.log('this is on click '+ text);
         let newText = '';
         setText(newText)
         props.showAlert('Text is Cleared', "success")
     }
     const handleOnChange = (event) =>{
-        // console.log('this is on change ');
         setText(event.target.value)
     }
     
@@ -31,7 +28,6 @@ export default function TextForm(props) {
         const vowels = ['a','e','i','o','u'];
         let _count = 0;
         for(let i in text) {
-            // console.log(text[i])
             if(vowels.indexOf(text[i]) > -1 || vowels.indexOf(text[i].toLowerCase()) > -1) {
                 _count++;
             }
@@ -40,10 +36,7 @@ export default function TextForm(props) {
         props.showAlert('Vowels Counted Successfully', "success")
     }
     const handleCopy = () => {
-        var text = document.getElementById('myBox');
-        text.select();
-        navigator.clipboard.writeText(text.value);
-        document.getSelection().removeAllRanges();
+        navigator.clipboard.writeText(text);
         props.showAlert("Copied to Clipboard..!", "success" )      
     }
 
@@ -78,7 +71,7 @@ export default function TextForm(props) {
     </div>
     <div className="container my-3" style={{color:props.mode==='dark'?'white':'#042743'}}>
     <h2>Your Text Summary</h2>
-    <p>{text.split(" ").filter((element)=>{return element.length !==0}).length} words and {text.length} characters {count} Vowels are there.</p>
+    <p>{text.split(/\s+/).filter((element)=>{return element.length !==0}).length} words and {text.length} characters {count} Vowels are there.</p>
     <p>{0.008 * text.split(" ").filter((element)=>{return element.length !==0}).length} Minutes to read</p>
     <h3>Preview</h3>
     <p>{text.length > 0 ? text : "Nothing to preview...!!"}</p>
